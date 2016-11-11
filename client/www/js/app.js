@@ -29,18 +29,20 @@ angular.module('starter', ['ionic', 'btford.socket-io'])
     }, 3000);
 
     $scope.state = {
+      gas: '0 ppm',
+      gasState: 'Normal',
+      fire: false,
       humidity: '0%',
       temperature: '0C',
       groundHumidity: '0%',
-      gas: 'Normal',
-      fire: false,
-      fan: false,
-      fireAlarm: false,
+      airConditioning: false,
       irrigation: false,
+      inpureGas: false,
+      fireAlarm: false,
+      fan: false,
+      light: false,
       led2: false,
-      led5: false,
       led6: false,
-      led8: false,
       led9: false
     };
 
@@ -54,6 +56,10 @@ angular.module('starter', ['ionic', 'btford.socket-io'])
     };
 
     SocketService.on('state:changed', function(data){
+      if(data.substr(0,1) !== '{') {
+        console.error('Can not parse non json data: \n\n'+data);
+        return;
+      }
       var state = JSON.parse(data);
       console.log('state:changed', state);
       $timeout(function() {

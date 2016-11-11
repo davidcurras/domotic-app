@@ -2,13 +2,14 @@ var state = require('../state')();
 
 module.exports = function(action) {
   var defaultState = {
-    fan: false,
-    fireAlarm: false,
+    airConditioning: false,
     irrigation: false,
+    inpureGas: false,
+    fireAlarm: false,
+    fan: false,
+    light: false,
     led2: false,
-    led5: false,
     led6: false,
-    led8: false,
     led9: false
   };
   var actuatorsState = Object.assign(defaultState, state.actuators);
@@ -20,4 +21,3 @@ module.exports = function(action) {
   }
   state.actuators = actuatorsState;
 };
-      

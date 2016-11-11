@@ -7,38 +7,21 @@
 
     <link rel="manifest" href="manifest.json">
 
-    <!-- un-comment this code to enable service worker
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(() => console.log('service worker installed'))
-          .catch(err => console.log('Error', err));
-      }
-    </script>-->
-
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
-
-    <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <!-- socket.io js -->
+
     <script src="lib/socket.io-client/socket.io.js"></script>
-    <script src="http://192.168.5.100:3111/socket.io/socket.io.js"></script>
+    <script src="http://192.168.5.101:3111/socket.io/socket.io.js"></script>
     <script src="lib/angular-socket-io/socket.js"></script>
 
-    <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
-    <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/socket-service.js"></script>
   </head>
   <body ng-app="starter">
-
     <ion-pane>
       <ion-header-bar class="bar bar-dark">
         <h1 class="title">
@@ -79,6 +62,14 @@
               <span class="badge badge-dark">{{state.gas}}</span>
             </li>
             <li class="item item-icon-left">
+              <i class="icon ion-ios-cloud"></i> Tipo de Gas:
+              <span class="badge badge-dark">{{state.gasState}}</span>
+            </li>
+            <li class="item item-icon-left">
+              <i class="icon ion-ios-snowy"></i> Aire Acondicionado:
+              <span class="badge badge-dark">{{state.airConditioning ? 'Si':'No'}}</span>
+            </li>
+            <li class="item item-icon-left">
               <i class="icon ion-flame"></i> Fuego:
               <span class="badge badge-dark">{{state.fire ? 'Si':'No'}}</span>
             </li>
@@ -94,25 +85,16 @@
               </label>
             </li>
             <li class="item item-toggle item-icon-left">
-              <i class="icon ion-ios-flame-outline"></i> Alarma de Incendio
+              <i class="icon ion-ios-lightbulb"></i> Luz
               <label class="toggle toggle-dark">
-                <input type="checkbox" ng-model="state.fireAlarm" ng-change="changeState('fireAlarm', state.fireAlarm)" />
+                <input type="checkbox" ng-model="state.light" ng-change="changeState('light', state.light)" />
                 <div class="track">
                   <div class="handle"></div>
                 </div>
               </label>
             </li>
             <li class="item item-toggle item-icon-left">
-              <i class="icon ion-ios-rainy-outline"></i> Riego
-              <label class="toggle toggle-dark">
-                <input type="checkbox" ng-model="state.irrigation" ng-change="changeState('irrigation', state.irrigation)" />
-                <div class="track">
-                  <div class="handle"></div>
-                </div>
-              </label>
-            </li>
-            <li class="item item-toggle item-icon-left">
-              <i class="icon ion-ios-lightbulb"></i> Luz 2
+              <i class="icon ion-ios-lightbulb"></i> Led 2
               <label class="toggle toggle-dark">
                 <input type="checkbox" ng-model="state.led2" ng-change="changeState('led2', state.led2)" />
                 <div class="track">
@@ -121,16 +103,7 @@
               </label>
             </li>
             <li class="item item-toggle item-icon-left">
-              <i class="icon ion-ios-lightbulb"></i> Luz 5
-              <label class="toggle toggle-dark">
-                <input type="checkbox" ng-model="state.led5" ng-change="changeState('led5', state.led5)" />
-                <div class="track">
-                  <div class="handle"></div>
-                </div>
-              </label>
-            </li>
-            <li class="item item-toggle item-icon-left">
-              <i class="icon ion-ios-lightbulb"></i> Luz 6
+              <i class="icon ion-ios-lightbulb"></i> Led 6
               <label class="toggle toggle-dark">
                 <input type="checkbox" ng-model="state.led6" ng-change="changeState('led6', state.led6)" />
                 <div class="track">
@@ -139,16 +112,7 @@
               </label>
             </li>
             <li class="item item-toggle item-icon-left">
-              <i class="icon ion-ios-lightbulb"></i> Luz 8
-              <label class="toggle toggle-dark">
-                <input type="checkbox" ng-model="state.led8" ng-change="changeState('led8', state.led8)" />
-                <div class="track">
-                  <div class="handle"></div>
-                </div>
-              </label>
-            </li>
-            <li class="item item-toggle item-icon-left">
-              <i class="icon ion-ios-lightbulb"></i> Luz 9
+              <i class="icon ion-ios-lightbulb"></i> Led 9
               <label class="toggle toggle-dark">
                 <input type="checkbox" ng-model="state.led9" ng-change="changeState('led9', state.led9)" />
                 <div class="track">

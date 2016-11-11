@@ -2,11 +2,12 @@ var state = require('../state')();
 
 module.exports = function(action) {
   var defaultState = {
+    gas: '0ppm',
+    gasState: 'Normal',
+    fire: false,
     humidity: '0%',
     temperature: '0C',
-    groundHumidity: '0%',
-    gas: 'Normal',
-    fire: false
+    groundHumidity: '0%'
   };
   var sensorsState = Object.assign(defaultState, state.sensors);
   switch(action.type) {
@@ -17,4 +18,3 @@ module.exports = function(action) {
   }
   state.sensors = sensorsState;
 };
-      
