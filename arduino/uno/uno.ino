@@ -12,6 +12,4 @@ void loop() {
   Sensors::WatchLight();
   Sensors::WatchPIR1();
   Sensors::WatchPIR2();
-  Sensors::GetGroundHumidity();
-  Actuators::GetIrrigationState();
 }

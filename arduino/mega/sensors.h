@@ -1,16 +1,15 @@
-#include "DHT.h"
-
 class Sensors {
   public:
     static void Init();
     //getters
-    static String GetHumidity(DHT dht);
-    static String GetTemperature(DHT dht);
-    static String GetFlame();
-    static String GetGroundHumidity();
-    static String GetGasLevel();
+    static int GetGasLevel();
+    static int GetGasType();
+    static int GetFlame();
+    static float GetHumidity();
+    static float GetTemperature();
+    static float GetGroundHumidity();
     //watchers
     static void WatchFlame();
     static void WatchGasLevel();
-    static void WatchTemperature(DHT dht);
+    static void WatchTemperature();
 };

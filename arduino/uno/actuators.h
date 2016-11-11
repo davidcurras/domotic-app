@@ -3,8 +3,10 @@ class Actuators {
     static void Init();
     //setters
     static void SetSpeaker(int speakerState);
-    static void SetLed1(int led1State);
-    static void SetLed2(int led2State);
+    static void SetLedLight(int ledLightState);
+    static void SetLedPir(int ledPirState);
     //getters
-    static int GetIrrigationState();
+    static int GetSpeaker();
+    static int GetLedLight();
+    static int GetLedPir();
 };

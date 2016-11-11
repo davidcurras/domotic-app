@@ -3,79 +3,68 @@
 #include "sensors.h"
 #include "actuators.h"
 
+#define DHT_PIN 3
+#define DHT_TYPE DHT11
+DHT dht(DHT_PIN, DHT_TYPE);
+
 const int SENS_GAS_PIN = 0;       //A0  - Gas quality sensor MQ135
 const int SENS_FLAME_PIN = 1;     //D1  - Flame Detector
 const int SENS_HUMIDITY_PIN = A1; //A1  - Ground humidity sensor
+const int MAX_TEMP = 27;          //Max temperature for turn on AUTO_FAN
+const int MAX_GAS_LEVEL = 300;    //Max gas level for turn on led alert
 
 void Sensors::Init() {
+  dht.begin();
+  pinMode(SENS_GAS_PIN, INPUT);
   pinMode(SENS_FLAME_PIN, INPUT);
+  pinMode(SENS_HUMIDITY_PIN, INPUT);
 };
 
-String Sensors::GetHumidity(DHT dht) {
-  float humidity = dht.readHumidity();
-  return "\t\"humidity\": \""+String(humidity)+"\",\n";
+int Sensors::GetGasLevel() {
+  return analogRead(SENS_GAS_PIN);
 };
 
-String Sensors::GetTemperature(DHT dht) {
-  float temperature = dht.readTemperature();
-  return "\t\"temperature\": \""+String(temperature)+"C\",\n";
+int Sensors::GetGasType() {
+  int gasLevel = Sensors::GetGasLevel();
+  return (int) (gasLevel / 100);
 };
 
-String Sensors::GetFlame() {
-  if(digitalRead(SENS_FLAME_PIN) == HIGH) {
-    return "\t\"fire\": true,\n";
-  } else {
-    return "\t\"fire\": false,\n";
-  }
+int Sensors::GetFlame() {
+  return digitalRead(SENS_FLAME_PIN);
 };
 
-String Sensors::GetGroundHumidity() {
-  int humidity = (100 * analogRead(SENS_HUMIDITY_PIN)) / 1024;
-  return "\t\"groundHumidity\": \""+String(humidity)+"%\",\n";
+float Sensors::GetHumidity() {
+  return dht.readHumidity();
 };
 
-String Sensors::GetGasLevel() {
-  int gasLevel = analogRead(SENS_GAS_PIN);
-  int gasType = (int) (gasLevel / 100);
-  String data = "\t\"gas\": \""+String(gasLevel)+"ppm\",\n";
-  data += "\t\"gasState\": ";
-  switch(gasType) {
-    case 0:
-      data += "\"normal\",\n";
-      break;
-    case 1:
-      data += "\"low-co2\",\n";
-      break;
-    case 2:
-    case 3:
-      data += "\"high-co2\",\n";
-      break;
-    case 4:
-    default:
-      data += "\"high-butano\",\n";
-      break;
-  }
-  return data;
+float Sensors::GetTemperature() {
+  return dht.readTemperature();
 };
 
-void Sensors::WatchFlame() {
-  if(digitalRead(SENS_FLAME_PIN) == HIGH) {
-    Actuators::SetFireAlarm(HIGH);
-  } else {
-    Actuators::SetFireAlarm(LOW);
-  }
+float Sensors::GetGroundHumidity() {
+  return (100 * analogRead(SENS_HUMIDITY_PIN)) / 1024;
 };
 
 void Sensors::WatchGasLevel() {
-  int gasType = (int) (analogRead(SENS_GAS_PIN) / 100);
-  bool fireAlarmState = gasType;
-  Actuators::SetFireAlarm(fireAlarmState);
+  if(Sensors::GetGasLevel() > MAX_GAS_LEVEL) {
+    Actuators::SetGasLed(HIGH);
+  } else {
+    Actuators::SetGasLed(LOW);
+  }
 };
 
-void Sensors::WatchTemperature(DHT dht) {
-  if (dht.readTemperature() < 25) {
-    Actuators::SetFan(LOW);
+void Sensors::WatchFlame() {
+  if(Sensors::GetFlame() == HIGH) {
+    Actuators::SetFireLed(HIGH);
   } else {
-    Actuators::SetFan(HIGH);
+    Actuators::SetFireLed(LOW);
+  }
+};
+
+void Sensors::WatchTemperature() {
+  if (Sensors::GetTemperature() > MAX_TEMP) {
+    Actuators::SetAutoFan(HIGH);
+  } else {
+    Actuators::SetAutoFan(LOW);
   }
 };
