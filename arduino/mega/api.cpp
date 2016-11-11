@@ -1,6 +1,8 @@
 #include <SPI.h>
 #include <Ethernet.h>
+#include "DHT.h"
 #include "api.h"
+#include "sensors.h"
 #include "actuators.h"
 
 void Api::Send404(EthernetClient client) {
@@ -12,8 +14,17 @@ void Api::Send404(EthernetClient client) {
   client.println("<html><body>404</body></html>");
 };
 
-void Api::SendStatus(EthernetClient client, String data) {
+void Api::SendStatus(EthernetClient client, DHT dht) {
   // Send a standard http response header
+  String data = "";
+  data += Sensors::GetHumidity(dht);
+  data += Sensors::GetTemperature(dht);
+  data += Sensors::GetFlame();
+  data += Sensors::GetGroundHumidity();
+  data += Sensors::GetGasLevel();
+  data += Actuators::GetIrrigationState();
+  data += Actuators::GetLedsState();
+  data += Actuators::GetFanState();
   client.println("HTTP/1.1 200 OK");
   client.println("Content-Type: application/json");
   client.println("Connnection: close");
@@ -23,18 +34,26 @@ void Api::SendStatus(EthernetClient client, String data) {
   client.println("}");
 };
 
-//get state of LED checkboxes from web page
-void Api::SetLeds(String httpReq) {
+void Api::URL(String httpReq, EthernetClient client, DHT dht) {
   Serial.println(httpReq);
-  for (byte i = 0; i < sizeof(Actuators::LEDS); i++) {
-    String ledValue = String(Actuators::LEDS[i]) + '0';
-    bool char9 = String(httpReq.charAt(9)) == ledValue;
-    bool char16 = String(httpReq.charAt(16)) == ledValue;
-    // if LED box is checked set led number to 1
-    if (char9 && char16) { 
-      Actuators::SetLed(i, HIGH);
-    } else if (char9) {
-      Actuators::SetLed(i, LOW);
-    }
+  Serial.println(httpReq.substring(5, 10));
+  if(httpReq.substring(5, 10) == "state") {
+    Api::SendStatus(client, dht);
+  } else if(httpReq.substring(5, 10) == "fan/0") {
+    Actuators::SetFan(LOW);
+  } else if(httpReq.substring(5, 10) == "fan/1") {
+    Actuators::SetFan(HIGH);
+  } else if(httpReq.substring(5, 16) == "firealarm/0") {
+    Actuators::SetFireAlarm(LOW);
+  } else if(httpReq.substring(5, 16) == "firealarm/1") {
+    Actuators::SetFireAlarm(HIGH);
+  } else if(httpReq.substring(5, 17) == "irrigation/0") {
+    Actuators::SetGas(LOW);
+  } else if(httpReq.substring(5, 17) == "irrigation/1") {
+    Actuators::SetGas(HIGH);
+  } else if(httpReq.substring(5, 12) == "light/0") {
+    Actuators::SetLed(9, LOW);
+  } else if(httpReq.substring(5, 12) == "light/1") {
+    Actuators::SetLed(9, HIGH);
   }
 };

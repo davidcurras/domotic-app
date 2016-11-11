@@ -38,17 +38,7 @@ void loop() {
         httpReq += httpChar;      
         // answer first HTTP request immediately
         if (httpChar == '\n') {
-          String data = "";
-          Api::SetLeds(httpReq);
-          data += Sensors::GetHumidity(dht);
-          data += Sensors::GetTemperature(dht);
-          data += Sensors::GetFlame();
-          data += Sensors::GetGroundHumidity();
-          data += Sensors::GetGasLevel();
-          data += Actuators::GetIrrigationState();
-          data += Actuators::GetFanState();
-          data += Actuators::GetLedsState();
-          Api::SendStatus(client, data);
+          Api::URL(httpReq, client, dht);
           //delete string contents
           httpReq = "";
           client.stop();

@@ -13,46 +13,46 @@ void Sensors::Init() {
 
 String Sensors::GetHumidity(DHT dht) {
   float humidity = dht.readHumidity();
-  return "\t'humidity': '"+String(humidity)+"',\n";
+  return "\t\"humidity\": \""+String(humidity)+"\",\n";
 };
 
 String Sensors::GetTemperature(DHT dht) {
   float temperature = dht.readTemperature();
-  return "\t'temperature': '"+String(temperature)+"C',\n";
+  return "\t\"temperature\": \""+String(temperature)+"C\",\n";
 };
 
 String Sensors::GetFlame() {
   if(digitalRead(SENS_FLAME_PIN) == HIGH) {
-    return "\t'fire': true,\n";
+    return "\t\"fire\": true,\n";
   } else {
-    return "\t'fire': false,\n";
+    return "\t\"fire\": false,\n";
   }
 };
 
 String Sensors::GetGroundHumidity() {
   int humidity = (100 * analogRead(SENS_HUMIDITY_PIN)) / 1024;
-  return "\t'groundHumidity': '"+String(humidity)+"%',\n";
+  return "\t\"groundHumidity\": \""+String(humidity)+"%\",\n";
 };
 
 String Sensors::GetGasLevel() {
   int gasLevel = analogRead(SENS_GAS_PIN);
   int gasType = (int) (gasLevel / 100);
-  String data = "\t'gas': '"+String(gasLevel)+"ppm',\n";
-  data += "\t'gasState': ";
+  String data = "\t\"gas\": \""+String(gasLevel)+"ppm\",\n";
+  data += "\t\"gasState\": ";
   switch(gasType) {
     case 0:
-      data += "'normal',\n";
+      data += "\"normal\",\n";
       break;
     case 1:
-      data += "'low-co2',\n";
+      data += "\"low-co2\",\n";
       break;
     case 2:
     case 3:
-      data += "'high-co2',\n";
+      data += "\"high-co2\",\n";
       break;
     case 4:
     default:
-      data += "'high-butano',\n";
+      data += "\"high-butano\",\n";
       break;
   }
   return data;

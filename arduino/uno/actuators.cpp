@@ -14,15 +14,24 @@ void Actuators::Init() {
 };
 
 void Actuators::SetSpeaker(int speakerState) {
-  digitalWrite(ACT_SPEAKER_PIN, speakerState);
+  int current = digitalRead(ACT_SPEAKER_PIN);
+  if(current != speakerState) {
+    digitalWrite(ACT_SPEAKER_PIN, speakerState);
+  }
 };
 
 void Actuators::SetLed1(int led1State) {
-  digitalWrite(ACT_LED1_PIN, led1State);
+  int current = digitalRead(ACT_LED1_PIN);
+  if(current != led1State) {
+    digitalWrite(ACT_LED1_PIN, led1State);
+  }
 };
 
 void Actuators::SetLed2(int led2State) {
-  digitalWrite(ACT_LED2_PIN, led2State);
+  int current = digitalRead(ACT_LED2_PIN);
+  if(current != led2State) {
+    digitalWrite(ACT_LED2_PIN, led2State);
+  }
 };
 
 int Actuators::GetIrrigationState() {

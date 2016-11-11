@@ -29,11 +29,17 @@ void Actuators::Init() {
 };
 
 void Actuators::SetFan(int fanState) {
-  digitalWrite(ACT_FAN_PIN , fanState);
+  int current = digitalRead(ACT_FAN_PIN);
+  if(current != fanState) {
+    digitalWrite(ACT_FAN_PIN, fanState);
+  }
 };
 
 void Actuators::SetFireAlarm(int alarmState) {
-  digitalWrite(ALARM_GAS_FIRE_PIN , alarmState);
+  int current = digitalRead(ALARM_GAS_FIRE_PIN);
+  if(current != alarmState) {
+    digitalWrite(ALARM_GAS_FIRE_PIN, alarmState);
+  }
 };
 
 void Actuators::SetLed(int index, int ledState) {
@@ -63,32 +69,41 @@ bool Actuators::SetGas(int gasType) {
       fireAlarmState = true;
       break;
   }
-  digitalWrite(ACT_CO2_LOW_PIN, co2Low);
-  digitalWrite(ACT_CO2_HIGH_PIN, co2High);
-  digitalWrite(ACT_BUTANO_PIN, butano);
+  int current = digitalRead(ACT_CO2_LOW_PIN);
+  if(current != co2Low) {
+    digitalWrite(ACT_CO2_LOW_PIN, co2Low);
+  }
+  current = digitalRead(ACT_CO2_HIGH_PIN);
+  if(current != co2High) {
+    digitalWrite(ACT_CO2_HIGH_PIN, co2High);
+  }
+  current = digitalRead(ACT_BUTANO_PIN);
+  if(current != butano) {
+    digitalWrite(ACT_BUTANO_PIN, butano);
+  }
   return fireAlarmState;
 };
 
 String Actuators::GetIrrigationState() {
   if(digitalRead(ACT_IRRIGATION_PIN) == HIGH) {
-    return "\t'irrigation': true,\n";
+    return "\t\"irrigation\": true,\n";
   } else {
-    return "\t'irrigation': false,\n";
+    return "\t\"irrigation\": false,\n";
   }
 };
 
 String Actuators::GetFanState() {
   if(digitalRead(ACT_FAN_PIN) == HIGH) {
-    return "\t'fan': true,\n";
+    return "\t\"fan\": true\n";
   } else {
-    return "\t'fan': false,\n";
+    return "\t\"fan\": false\n";
   }
 };
 
 String Actuators::GetLedsState() {
   String data = "";
   for (byte i = 0; i < sizeof(Actuators::LEDS); i++) {
-    data += "\t'led"+String(i)+"': "+String(Actuators::LEDS[i])+",\n";
+    data += "\t\"led"+String(i)+"\": "+String(Actuators::LEDS[i])+",\n";
   }
   return data;
 };
