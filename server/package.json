@@ -1,0 +1,22 @@
+{
+  "name": "domotic-server",
+  "version": "0.0.1",
+  "description": "Domotic server using socket.io and RxJS",
+  "main": "index.js",
+  "dependencies": {
+    "request": "^2.78.0",
+    "request-promise": "^4.1.1",
+    "socket.io": "^1.5.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "domotic",
+    "server",
+    "reactive"
+  ],
+  "author": "David Curras",
+  "license": "MIT"
+}
