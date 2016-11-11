@@ -22,7 +22,9 @@ var getStateFailed = function(error) {
 };
 
 var getState = function(socket) {
-  rp('http://sushihomearg.com/api/v1/category')
+  var url = 'http://192.168.5.6/state';
+  console.log(url);
+  rp(url)
     .then(function(newState) {
       var action = getStateSuccess(newState);
       reducers.act(action);

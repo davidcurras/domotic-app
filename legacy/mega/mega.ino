@@ -95,7 +95,7 @@ void loop()
           client.println("</h1>");
           client.println("<div class='educachip'>");
           client.println("<span>Realizado por </span>");
-          client.println("Bosio, Luis y Debushi  Axel");
+          client.println("Bosio, Luis - Debuchi, Axel");
           client.println("</a>");
           client.println("</div>");
           client.println("</header>"); 

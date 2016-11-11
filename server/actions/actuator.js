@@ -22,8 +22,9 @@ var setStateFailed = function(error) {
 };
 
 var setState = function(actuator, state, socket) {
-  //return rp('http://196.162.0.1/'+actuator+'/'+state)
-  rp('http://sushihomearg.com/api/v1/category')
+  var url = 'http://192.168.5.6/'+actuator+'/'+state;
+  console.log(url);
+  rp(url)
     .then(function(newState) {
       var action = setStateSuccess(newState);
       reducers.act(action);
