@@ -37,7 +37,11 @@ angular.module('starter', ['ionic', 'btford.socket-io'])
       fan: false,
       fireAlarm: false,
       irrigation: false,
-      light: false
+      led2: false,
+      led5: false,
+      led6: false,
+      led8: false,
+      led9: false
     };
 
     $scope.changeState = function(actuator, state) {

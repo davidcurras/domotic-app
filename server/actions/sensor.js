@@ -31,7 +31,7 @@ var getState = function(socket) {
       socket.emit('state:changed', newState);
     })
     .catch(function(error) {
-      console.log('client:state:error', error);
+      console.log('client:state:error');
       socket.emit('state:error', error);
       var action = getStateFailed(error);
       reducers.act(action);

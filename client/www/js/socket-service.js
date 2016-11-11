@@ -6,7 +6,7 @@
       'socketFactory',
       function(socketFactory){
         return socketFactory({
-          ioSocket: io.connect('http://localhost:3111')
+          ioSocket: io.connect('http://192.168.5.100:3111')
         });
       }
     ]);

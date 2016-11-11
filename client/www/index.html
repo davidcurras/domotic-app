@@ -27,7 +27,7 @@
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <!-- socket.io js -->
     <script src="lib/socket.io-client/socket.io.js"></script>
-    <script src="http://localhost:3111/socket.io/socket.io.js"></script>
+    <script src="http://192.168.5.100:3111/socket.io/socket.io.js"></script>
     <script src="lib/angular-socket-io/socket.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
@@ -112,9 +112,45 @@
               </label>
             </li>
             <li class="item item-toggle item-icon-left">
-              <i class="icon ion-ios-lightbulb"></i> Luz
+              <i class="icon ion-ios-lightbulb"></i> Luz 2
               <label class="toggle toggle-dark">
-                <input type="checkbox" ng-model="state.light" ng-change="changeState('light', state.light)" />
+                <input type="checkbox" ng-model="state.led2" ng-change="changeState('led2', state.led2)" />
+                <div class="track">
+                  <div class="handle"></div>
+                </div>
+              </label>
+            </li>
+            <li class="item item-toggle item-icon-left">
+              <i class="icon ion-ios-lightbulb"></i> Luz 5
+              <label class="toggle toggle-dark">
+                <input type="checkbox" ng-model="state.led5" ng-change="changeState('led5', state.led5)" />
+                <div class="track">
+                  <div class="handle"></div>
+                </div>
+              </label>
+            </li>
+            <li class="item item-toggle item-icon-left">
+              <i class="icon ion-ios-lightbulb"></i> Luz 6
+              <label class="toggle toggle-dark">
+                <input type="checkbox" ng-model="state.led6" ng-change="changeState('led6', state.led6)" />
+                <div class="track">
+                  <div class="handle"></div>
+                </div>
+              </label>
+            </li>
+            <li class="item item-toggle item-icon-left">
+              <i class="icon ion-ios-lightbulb"></i> Luz 8
+              <label class="toggle toggle-dark">
+                <input type="checkbox" ng-model="state.led8" ng-change="changeState('led8', state.led8)" />
+                <div class="track">
+                  <div class="handle"></div>
+                </div>
+              </label>
+            </li>
+            <li class="item item-toggle item-icon-left">
+              <i class="icon ion-ios-lightbulb"></i> Luz 9
+              <label class="toggle toggle-dark">
+                <input type="checkbox" ng-model="state.led9" ng-change="changeState('led9', state.led9)" />
                 <div class="track">
                   <div class="handle"></div>
                 </div>

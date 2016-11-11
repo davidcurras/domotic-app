@@ -31,6 +31,7 @@ void Actuators::Init() {
 void Actuators::SetFan(int fanState) {
   int current = digitalRead(ACT_FAN_PIN);
   if(current != fanState) {
+    Serial.println("SetFan" + String(fanState));
     digitalWrite(ACT_FAN_PIN, fanState);
   }
 };
@@ -38,15 +39,19 @@ void Actuators::SetFan(int fanState) {
 void Actuators::SetFireAlarm(int alarmState) {
   int current = digitalRead(ALARM_GAS_FIRE_PIN);
   if(current != alarmState) {
+    Serial.println("SetFireAlarm" + String(alarmState));
     digitalWrite(ALARM_GAS_FIRE_PIN, alarmState);
   }
 };
 
 void Actuators::SetLed(int index, int ledState) {
+  Serial.println("SetLed" + String(index) + String(ledState));
   led[index] = ledState;
+  digitalWrite(Actuators::LEDS[index], ledState);
 };
 
 bool Actuators::SetGas(int gasType) {
+  Serial.println("SetGas" + String(gasType));
   int co2Low, co2High, butano;
   bool fireAlarmState = false;
   switch(gasType) {
@@ -103,7 +108,8 @@ String Actuators::GetFanState() {
 String Actuators::GetLedsState() {
   String data = "";
   for (byte i = 0; i < sizeof(Actuators::LEDS); i++) {
-    data += "\t\"led"+String(i)+"\": "+String(Actuators::LEDS[i])+",\n";
+    int val = digitalRead(Actuators::LEDS[i]);
+    data += "\t\"led"+String(Actuators::LEDS[i])+"\": "+String(val)+",\n";
   }
   return data;
 };

@@ -5,7 +5,11 @@ module.exports = function(action) {
     fan: false,
     fireAlarm: false,
     irrigation: false,
-    light: false
+    led2: false,
+    led5: false,
+    led6: false,
+    led8: false,
+    led9: false
   };
   var actuatorsState = Object.assign(defaultState, state.actuators);
   switch(action.type) {

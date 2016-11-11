@@ -38,7 +38,7 @@ void loop() {
         httpReq += httpChar;      
         // answer first HTTP request immediately
         if (httpChar == '\n') {
-          Api::URL(httpReq, client, dht);
+          Api::ProcessURL(httpReq, client, dht);
           //delete string contents
           httpReq = "";
           client.stop();
