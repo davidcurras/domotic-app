@@ -7,13 +7,12 @@ var setSocket = function(socket) {
 };
 
 var getState = function() {
-  console.log(actions);
   if(state.process && state.process.busy){
-    socket.emit('state:error', {error: 'server is busy'});
+    socketIO.emit('state:error', {error: 'server is busy'});
     actions.dispatch(actions.list.client.sendBusy());
   } else {
     console.log('sensor:state:get');
-    actions.dispatch(actions.list.sensor.getState());
+    actions.dispatch(actions.list.sensor.getState(socketIO));
   }
 };
 

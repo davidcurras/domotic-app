@@ -21,14 +21,17 @@ var setStateFailed = function(error) {
   }
 };
 
-var setState = function(actuator, state) {
+var setState = function(actuator, state, socket) {
   //return rp('http://196.162.0.1/'+actuator+'/'+state)
   rp('http://sushihomearg.com/api/v1/category')
     .then(function(newState) {
       var action = setStateSuccess(newState);
       reducers.act(action);
+      socket.emit('state:changed', newState);
     })
     .catch(function(error) {
+      console.log('client:state:error', error);
+      socket.emit('state:error', error);
       var action = setStateFailed(error);
       reducers.act(action);
     });
